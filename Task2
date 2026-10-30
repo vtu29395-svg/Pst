@@ -1,0 +1,26 @@
+import java.util.*;
+import java.util.stream.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        Map<String, List<Integer>> map = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            String id = sc.next();
+            int temp = sc.nextInt();
+
+            if (temp > 50)
+                map.computeIfAbsent(id, k -> new ArrayList<>()).add(temp);
+        }
+
+        map.entrySet().stream()
+            .sorted((a, b) -> Double.compare(
+                b.getValue().stream().mapToInt(x -> x).average().orElse(0),
+                a.getValue().stream().mapToInt(x -> x).average().orElse(0)))
+            .forEach(e -> System.out.println(e.getKey() + " " +
+                e.getValue().stream().mapToInt(x -> x).average().orElse(0)));
+    }
+}
