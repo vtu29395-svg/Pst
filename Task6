@@ -1,0 +1,54 @@
+import java.util.*;
+
+abstract class Vehicle {
+    abstract int calculateFare(int distance);
+}
+
+class Bike extends Vehicle {
+    int calculateFare(int d) {
+        return d * 5;
+    }
+}
+
+class Cab extends Vehicle {
+    int calculateFare(int d) {
+        return d * 12;
+    }
+}
+
+class Auto extends Vehicle {
+    int calculateFare(int d) {
+        return d * 12;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String type = sc.next();
+            int distance = sc.nextInt();
+
+            Vehicle v = null;
+
+            if (distance > 0) {
+                switch (type.toLowerCase()) {
+                    case "bike": v = new Bike(); break;
+                    case "cab": v = new Cab(); break;
+                    case "auto": v = new Auto(); break;
+                }
+            }
+
+            try {
+                if (v == null)
+                    throw new IllegalArgumentException();
+
+                System.out.println(v.calculateFare(distance));
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid Booking");
+            }
+        }
+    }
+}
